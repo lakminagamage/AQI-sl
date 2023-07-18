@@ -3,9 +3,9 @@ import Paho from 'paho-mqtt';
 
 
 const client = new Paho.Client(
-  'hawkeyeinnovationsllc.ddns.net',
-  Number(9001),
-"Hawk-IoT-Client" + Math.random(1,1000000).toString()
+  'b69a9028cdf14a568cc5abf9603dde1c.s1.eu.hivemq.cloud',
+  Number(8884),
+"AQI-client" + Math.random(1,1000000).toString()
 );
 
 
@@ -14,14 +14,14 @@ const client = new Paho.Client(
 
 client.connect( {
   
-  // onSuccess: ()=> {
-  //   //console.log('connected');
-  // },
-  userName: 'adam',
-  password: 'Adamiowa21!',
-  useSSL: false,
+  onSuccess: ()=> {
+    console.log('connected');
+  },
+  userName: 'aqi-app',
+  password: 'aqi-uom23LK',
+  useSSL: true,
   reconnect: true,
-  keepAliveInterval: 3600,
+  keepAliveInterval: 60,
   
 
   onFailure: (err)=> {

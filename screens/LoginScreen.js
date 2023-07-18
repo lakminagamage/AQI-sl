@@ -10,8 +10,8 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const LoginScreen = () => {
 
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('lakmina@mail.com')
+  const [password, setPassword] = useState('lakmina')
   const navigation = useNavigation()
 
 
