@@ -17,13 +17,18 @@ const HomeScreen = () => {
     const[parameter2, setParameter2] = useState(70);
     const[parameter3, setParameter3] = useState(22.5);
     const[parameter4, setParameter4] = useState(1.2);
+    const[parameter5, setParameter5] = useState(50);
+
+    const date = new Date();
+    const showTime = date.getHours()
+        + ':' + date.getMinutes()
+        + ":" + date.getSeconds();
+
+    
 
 
     useEffect(() => {
-    client.subscribe("ST1/rain");
-    client.subscribe("ST1/wind");
-    client.subscribe("ST1/temp");
-    client.subscribe("ST1/rh");
+    client.subscribe("ST1/#")
 
       client.onMessageArrived = (message) => {
         console.log(message.payloadString)
@@ -40,6 +45,9 @@ const HomeScreen = () => {
         else if(message.destinationName === "ST1/rain"){
             setParameter4(message.payloadString);
             }
+        else if(message.destinationName === "ST1/aqi"){
+            setParameter5(message.payloadString);
+            }
         console.log(message.payloadString)
       }
     return () => {
@@ -47,6 +55,7 @@ const HomeScreen = () => {
       client.unsubscribe("ST1/temp")
       client.unsubscribe("ST1/rain")
       client.unsubscribe("ST1/wind")
+      client.unsubscribe("ST1/aqi")
       console.log("unsubscribed")
     }
     }, [])
@@ -121,10 +130,8 @@ const HomeScreen = () => {
 
                     <Text 
                     style={styles.main}
-                    >Air Quality Index - Sri Lanka</Text>
-
-
-                    
+                    >Air Quality Index - Sri Lanka</Text>        
+                    <Text style={styles.timestamp}>Last Update :  {showTime}</Text>            
                 </View>
             </View>
             
@@ -136,46 +143,34 @@ const HomeScreen = () => {
                 </View>
                 <ScrollView ref={ref => this.scrollViewRef = ref} style={styles.list}>
                         
-                        <View style={styles.listItem}>
-                        <View style={styles.topic}>
-                            <Text style={styles.txtTopic}>Station 01</Text>
-                            <Text style={styles.txtTopicSub}>Relative Humidity</Text>
-                        </View>
-                        <View style={[styles.widgetContainer,{marginTop:-10,height:110}]}>
-                        <Progress.Bar progress={parameter1/ 100} width={250} height={30} color="#FFC300" style={styles.progressBar} />
-                        <Text style={styles.progressBarText}>{parameter1} %</Text>
-                        
-                        </View>
-                        </View>
 
 
-                        <View style={styles.listItem}>
+                <View style={styles.listItem_aqi}>
                         <View style={styles.topic}>
                             <Text style={styles.txtTopic}>Station 01</Text>
-                            <Text style={styles.txtTopicSub}>Wind</Text>
+                            <Text style={styles.txtTopicSub}>Air Quality Index</Text>
                         </View>
                         <View style={[styles.widgetContainer,{marginTop:-10,height:110}]}>
-                        
-                        <RNSpeedometer style={{}} value={Number(parameter2)} size={140} labelStyle={{ fontSize: 24, color: '#FFFFFF' }} labelNoteStyle={{ fontSize: 0, display: 'none' }} labels={[
+                        <RNSpeedometer value={Number(parameter5)} size={190} labelStyle={{ fontSize: 28, color: '#FFFFFF' }} labelNoteStyle={{ fontSize: 0, display: 'none' }} labels={[
                     {
                         name: 'Too Slow',
                         labelColor: '#ff2900',
-                        activeBarColor: '#00ff6b',
+                        activeBarColor: '#48cf1f',
                     },
                     {
                         name: 'Very Slow',
-                        labelColor: '#ff5400',
+                        labelColor: '#f95400',
                         activeBarColor: '#14eb6e',
                     },
                     {
                         name: 'Slow',
                         labelColor: '#f4ab44',
-                        activeBarColor: '#f2cf1f',
+                        activeBarColor: '#00ff6b',
                     },
                     {
                         name: 'Normal',
                         labelColor: '#f2cf1f',
-                        activeBarColor: '#f4ab44',
+                        activeBarColor: '#f2cf1f',
                     },
                     {
                         name: 'Fast',
@@ -189,6 +184,38 @@ const HomeScreen = () => {
                     },
                 ]} />
                         
+                        
+                        </View>
+                        </View>
+
+
+
+                        <View style={styles.listItem}>
+                        <View style={styles.topic}>
+                            <Text style={styles.txtTopic}>Station 01</Text>
+                            <Text style={styles.txtTopicSub}>Relative Humidity</Text>
+                        </View>
+                        <View style={[styles.widgetContainer,{marginTop:-10,height:110}]}>
+                        <Progress.Bar progress={parameter1/ 100} width={250} height={30} color="#FFC300" style={styles.progressBar} />
+                        <Text style={styles.progressBarText}>{parameter1} %</Text>
+                        
+                        </View>
+                        </View>
+
+
+
+                        
+
+
+                        <View style={styles.listItem}>
+                        <View style={styles.topic}>
+                            <Text style={styles.txtTopic}>Station 01</Text>
+                            <Text style={styles.txtTopicSub}>Wind</Text>
+                        </View>
+                        <View style={[styles.widgetContainer,{marginTop:-10,height:110}]}>
+                        <Text style={styles.txt}>{parameter2} </Text>
+                        
+                        
                         </View>
                         </View>
 
@@ -196,10 +223,42 @@ const HomeScreen = () => {
                         <View style={styles.listItem}>
                         <View style={styles.topic}>
                             <Text style={styles.txtTopic}>Station 01</Text>
-                            <Text style={styles.txtTopicSub}>Temperature</Text>
+                            <Text style={styles.txtTopicSub}>Temperature (℃)</Text>
                         </View>
                         <View style={[styles.widgetContainer,{marginTop:-10,height:110}]}>
-                        <Text style={styles.txt}>{parameter3} ℃ </Text>
+                        <RNSpeedometer style={{}} value={Number(parameter3)} size={140} labelStyle={{ fontSize: 24, color: '#FFFFFF' }} labelNoteStyle={{ fontSize: 0, display: 'none' }} labels={[
+                    {
+                        name: 'Too Slow',
+                        labelColor: '#ff2900',
+                        activeBarColor: '#12cf1f',
+                    },
+                    {
+                        name: 'Very Slow',
+                        labelColor: '#ff5400',
+                        activeBarColor: '#14eb6e',
+                    },
+                    {
+                        name: 'Slow',
+                        labelColor: '#f4ab44',
+                        activeBarColor: '#f0eb6e',
+                    },
+                    {
+                        name: 'Normal',
+                        labelColor: '#f2cf1f',
+                        activeBarColor: '#f2cf1f',
+                    },
+                    {
+                        name: 'Fast',
+                        labelColor: '#14eb6e',
+                        activeBarColor: '#ff5400',
+                    },
+                    {
+                        name: 'Unbelievably Fast',
+                        labelColor: '#00ff6b',
+                        activeBarColor: '#ff2900',
+                    },
+                ]} />
+                       
                         </View>
                         </View>
 
@@ -214,7 +273,6 @@ const HomeScreen = () => {
                         </View>
                         </View>
                 </ScrollView>
-                
             </View>
             <StatusBar style='auto' />
         </View>
@@ -291,6 +349,30 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         alignItems: 'center',
         marginLeft: 20
+    },
+
+    listItem_aqi: {
+        flex: 1,
+        width: '90%',
+        borderRadius: 20,
+        backgroundColor: colors.darkGreen,
+        paddingTop: 20,
+        paddingBottom: 30,
+        alignItems: 'center',
+        marginLeft: 20,
+        marginBottom: 30
+    },
+
+    listItem_aqi_yel: {
+        flex: 1,
+        width: '90%',
+        borderRadius: 20,
+        backgroundColor: colors.darkYellow,
+        marginBottom: 10,
+        paddingTop: 10,
+        alignItems: 'center',
+        marginLeft: 20,
+        marginBottom: 30
     },
 
     widgetContainer: {
@@ -382,6 +464,11 @@ const styles = StyleSheet.create({
     main: {
         fontSize: 25,
         fontWeight: 'bold',
+    },
+    timestamp: {
+        fontSize: 20,
+        marginTop: 5,
+        marginBottom: 10,
     }
 })
 

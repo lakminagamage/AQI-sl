@@ -10,8 +10,8 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const LoginScreen = () => {
 
-  const [email, setEmail] = useState('lakmina@mail.com')
-  const [password, setPassword] = useState('lakmina')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const navigation = useNavigation()
 
 
@@ -59,7 +59,7 @@ const LoginScreen = () => {
           style={styles.icon}
           source={require('../assets/icons/user.png')}></Image>
 
-        <Text style={styles.heading}>AMQ Login</Text>
+        <Text style={styles.heading}>AQI Login</Text>
 
         <TextInput
           style={styles.textInput}
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
 
   buttonPrimary: {
     marginTop: 25,
-    backgroundColor: colors.primary,
+    backgroundColor: colors.darkBlue,
     width: 250,
     height: 40,
     borderRadius: 10,

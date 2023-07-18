@@ -12,7 +12,9 @@ const colors = {
     lgreen: '#00cec9',
     eleBlue: '#0984e3',
     exoPurp: '#6c5ce7',
-    mintGreen: '#00b894'
+    mintGreen: '#00b894',
+    darkGreen: '#014f0d',
+    darkYellow: '#848500',
 
 
 
