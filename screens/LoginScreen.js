@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
   heading: {
     marginTop: 20,
     fontSize: 35,
-    color: colors.darkBlue,
+    color: colors.black,
   },
 
   textInput: {
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
 
   buttonPrimary: {
     marginTop: 25,
-    backgroundColor: colors.darkBlue,
+    backgroundColor: colors.primary,
     width: 250,
     height: 40,
     borderRadius: 10,
